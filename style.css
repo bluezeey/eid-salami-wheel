@@ -1,54 +1,64 @@
 body {
     font-family: 'Arial', sans-serif;
-    text-align: center;
-    background-color: #1a1a2e;
+    background-color: #0f3460;
     color: #fff;
     margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.main-content {
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
     padding: 20px;
 }
 
 h1 {
+    font-size: 24px;
     color: #ffd700;
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
 }
 
 .wheel-container {
     position: relative;
-    display: inline-block;
-    margin-top: 20px;
-    width: 350px;
-    height: 350px;
+    display: block;
+    margin: 0 auto;
+    width: 320px;
+    height: 320px;
 }
 
 #wheel {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    border: 8px solid #ffd700;
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+    border: 5px solid #ffd700;
 }
 
 #pointer {
     position: absolute;
-    top: -15px;
+    top: -10px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 50px;
-    color: #ff4757;
+    font-size: 40px;
+    color: #ff4d4d;
     z-index: 10;
 }
 
 button {
-    background: linear-gradient(45deg, #27ae60, #2ecc71);
+    background: linear-gradient(45deg, #e94560, #ff4d4d);
     color: white;
     padding: 15px 40px;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: bold;
     border: none;
     border-radius: 50px;
     cursor: pointer;
     margin-top: 30px;
-    box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
+    box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
 }
 
 #result-card {
@@ -57,10 +67,16 @@ button {
     padding: 20px;
     border-radius: 15px;
     border: 2px solid #ffd700;
+    display: none; /* শুরুতে লুকানো */
+}
+
+#result-card.show {
     display: inline-block;
 }
 
 #result-amount {
     color: #ffd700;
-    font-size: 32px;
+    font-size: 36px;
+    font-weight: bold;
+    margin-top: 10px;
 }
