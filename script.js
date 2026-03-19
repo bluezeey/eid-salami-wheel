@@ -1,58 +1,73 @@
-const wheel = document.getElementById('wheel');
-const ctx = wheel.getContext('2d');
-const spinButton = document.getElementById('spin');
-const resultBox = document.getElementById('result-box');
-const resultAmount = document.getElementById('result-amount');
+const canvas = document.getElementById('wheelCanvas');
+const ctx = canvas.getContext('2d');
+const spinBtn = document.getElementById('spinBtn');
+const amountDisplay = document.getElementById('amount');
+const resultCard = document.getElementById('resultCard');
 
-const segments = ["২০ টাকা", "২০ টাকা", "২০ টাকা", "২০ টাকা", "৫০ টাকা", "৫০ টাকা", "৫০ টাকা", "১০০ টাকা", "১০০ টাকা", "২০০ টাকা"];
-const colors = ["#FF5733", "#C70039", "#900C3F", "#581845", "#2ECC71", "#27AE60", "#229954", "#3498DB", "#2980B9", "#F1C40F"];
-const numSegments = segments.length;
-const anglePerSegment = (2 * Math.PI) / numSegments;
+const sectors = [
+    { label: "২০ টাকা", color: "#FF5733" },
+    { label: "২০ টাকা", color: "#C70039" },
+    { label: "২০ টাকা", color: "#900C3F" },
+    { label: "২০ টাকা", color: "#581845" },
+    { label: "৫০ টাকা", color: "#2ECC71" },
+    { label: "৫০ টাকা", color: "#27AE60" },
+    { label: "৫০ টাকা", color: "#229954" },
+    { label: "১০০ টাকা", color: "#3498DB" },
+    { label: "১০০ টাকা", color: "#2980B9" },
+    { label: "২০০ টাকা", color: "#F1C40F" }
+];
 
-function drawWheel() {
-    ctx.clearRect(0, 0, wheel.width, wheel.height);
-    for(let i=0; i<numSegments; i++){
-        ctx.save();
-        ctx.beginPath();
-        ctx.moveTo(250,250);
-        ctx.arc(250,250,250,i*anglePerSegment,(i+1)*anglePerSegment);
-        ctx.fillStyle = colors[i];
-        ctx.fill();
-        ctx.stroke();
+const tot = sectors.length;
+const arc = Math.PI / (tot / 2);
+let ang = 0;
 
-        ctx.translate(250, 250);
-        ctx.rotate(i * anglePerSegment + anglePerSegment / 2);
-        ctx.textAlign = "right";
-        ctx.fillStyle = "#fff";
-        ctx.font = "bold 24px Arial";
-        ctx.fillText(segments[i], 230, 10);
-        ctx.restore();
-    }
+function drawSector(sector, i) {
+    const angle = i * arc;
+    ctx.save();
+    ctx.beginPath();
+    ctx.fillStyle = sector.color;
+    ctx.moveTo(250, 250);
+    ctx.arc(250, 250, 250, angle, angle + arc);
+    ctx.lineTo(250, 250);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.translate(250, 250);
+    ctx.rotate(angle + arc / 2);
+    ctx.textAlign = "right";
+    ctx.fillStyle = "#fff";
+    ctx.font = "bold 22px Arial";
+    ctx.fillText(sector.label, 230, 10);
+    ctx.restore();
 }
-drawWheel();
 
-let spinning = false;
-let currentRotation = 0;
+sectors.forEach(drawSector);
 
-spinButton.addEventListener('click', () => {
-    if(spinning) return;
-    spinning = true;
-    resultBox.style.display = "none";
+let isSpinning = false;
 
-    // ম্যাজিক: ০ থেকে ৬ ইনডেক্স মানে ২০ বা ৫০ টাকা
-    const riggedIndexes = [0, 1, 2, 3, 4, 5, 6];
-    const winningIndex = riggedIndexes[Math.floor(Math.random() * riggedIndexes.length)];
+spinBtn.onclick = () => {
+    if (isSpinning) return;
+    isSpinning = true;
+    resultCard.style.display = 'none';
+
+    // ম্যাজিক: ২০ বা ৫০ টাকার ঘরগুলো (০ থেকে ৬ ইনডেক্স)
+    const riggedIndices = [0, 1, 2, 3, 4, 5, 6];
+    const winIdx = riggedIndices[Math.floor(Math.random() * riggedIndices.length)];
     
-    const stopAt = 360 - (winningIndex * (360/numSegments)) - (180/numSegments);
-    const extraSpins = 3600; // ১০ বার পূর্ণ ঘুরবে
-    currentRotation += extraSpins + stopAt;
-
-    wheel.style.transition = "transform 4s cubic-bezier(0.15, 0, 0.15, 1)";
-    wheel.style.transform = `rotate(${currentRotation}deg)`;
+    // পয়েন্টার (উপরের দিকে -90 ডিগ্রি) অনুযায়ী ঘোরার সঠিক হিসাব
+    const stopAngle = (winIdx * (360 / tot)) + (180 / tot);
+    const totalRotation = (5 * 360) + (360 - stopAngle + 270);
+    
+    canvas.style.transition = "transform 4s cubic-bezier(0.1, 0, 0.2, 1)";
+    canvas.style.transform = `rotate(${totalRotation}deg)`;
 
     setTimeout(() => {
-        resultBox.style.display = "block";
-        resultAmount.innerText = segments[winningIndex];
-        spinning = false;
+        amountDisplay.innerText = sectors[winIdx].label;
+        resultCard.style.display = 'block';
+        isSpinning = false;
+        // রোটেশন রিসেট যেন পরেরবার ঠিক থাকে
+        const finalDeg = totalRotation % 360;
+        canvas.style.transition = "none";
+        canvas.style.transform = `rotate(${finalDeg}deg)`;
     }, 4000);
-});
+};
