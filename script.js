@@ -52,9 +52,9 @@ function getWeightedIndex() {
   let rand = Math.random();
 
   if (rand < 0.8) {
-    return Math.floor(Math.random() * 7); // 0–6 → 20 & 50
+    return Math.floor(Math.random() * 7);
   } else {
-    return 7 + Math.floor(Math.random() * 3); // 7–9 → 100 & 200
+    return 7 + Math.floor(Math.random() * 3);
   }
 }
 
@@ -65,11 +65,10 @@ spinBtn.addEventListener("click", () => {
 
   const selectedIndex = getWeightedIndex();
 
-  // 🎯 EXACT ANGLE FIX
   const segmentCenter = selectedIndex * anglePerSegment + anglePerSegment / 2;
-  const targetAngle = 360 - segmentCenter + 90; // pointer top fix
+  const targetAngle = 360 - segmentCenter + 90;
 
-  const extraSpins = 360 * 6; // 6 spins
+  const extraSpins = 360 * 6;
   const finalRotation = currentRotation + extraSpins + targetAngle;
 
   canvas.style.transition = "transform 4s cubic-bezier(0.33, 1, 0.68, 1)";
@@ -77,9 +76,13 @@ spinBtn.addEventListener("click", () => {
 
   currentRotation = finalRotation % 360;
 
-  setTimeout(() => {
+  // ✅ FIX: transitionend ব্যবহার করা (setTimeout না)
+  canvas.addEventListener("transitionend", function handler() {
     resultText.innerText = `আপনি পেয়েছেন: ${segments[selectedIndex]}`;
     resultCard.classList.remove("hidden");
     spinBtn.disabled = false;
-  }, 4000);
+
+    // remove event listener (important)
+    canvas.removeEventListener("transitionend", handler);
+  });
 });
