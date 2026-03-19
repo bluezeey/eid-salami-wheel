@@ -1,114 +1,48 @@
-/* পুরো পেজের বেসিক সেটআপ */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-align: center;
-    background-color: #1a1a2e; /* গাঢ় ডার্ক ব্লু */
-    color: #fff; /* সাদা লেখা */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    min-height: 100vh;
-    padding: 20px;
+  text-align: center;
+  font-family: Arial;
+  background: #0f172a;
+  color: white;
 }
 
-/* বড় হেডিং */
 h1 {
-    font-size: 36px;
-    color: #ffd700; /* গোল্ডেন কালার */
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    margin-bottom: 20px;
+  color: gold;
 }
 
-/* চাকার কন্টেইনার (এখানেই চাকা এবং পয়েন্টার থাকবে) */
-.wheel-container {
-    position: relative;
-    display: inline-block;
-    width: 300px; /* মোবাইলের জন্য পারফেক্ট সাইজ */
-    height: 300px;
-    margin: 20px 0;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    border-radius: 50%;
+input {
+  padding: 10px;
+  margin: 10px;
+  border-radius: 8px;
+  border: none;
 }
 
-/* চাকা (Canvas) */
+.container {
+  position: relative;
+  display: inline-block;
+}
+
 #wheel {
-    border: 8px solid #333; /* মেটালিক বর্ডার */
-    border-radius: 50%;
-    width: 100%;
-    height: 100%;
-    transition: transform 5s cubic-bezier(0.1, 0, 0.2, 1);
+  border-radius: 50%;
+  border: 5px solid #fff;
+  transition: transform 5s ease-out;
 }
 
-/* উপরের পয়েন্টার */
-#pointer {
-    position: absolute;
-    top: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 50px;
-    color: #ff4757; /* লাল রঙ */
-    z-index: 10;
-    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+.pointer {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 30px solid red;
 }
 
-/* সুন্দর 'ঘোরাও!' বাটন */
 button {
-    margin-top: 30px;
-    padding: 15px 40px;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    background: linear-gradient(135deg, #ff6b6b, #ee5253); /* আধুনিক কালার */
-    color: #fff;
-    border: none;
-    border-radius: 30px;
-    text-transform: uppercase;
-    box-shadow: 0 5px 15px rgba(238, 82, 83, 0.4);
-    transition: all 0.3s ease;
-}
-
-button:hover {
-    box-shadow: 0 8px 20px rgba(238, 82, 83, 0.6);
-}
-
-button:active {
-    transform: scale(0.95);
-}
-
-/* ফলাফল দেখার কার্ড */
-#result-card {
-    background-color: #2c2c54; /* কার্ডের কালার */
-    border-radius: 15px;
-    padding: 20px 30px;
-    margin-top: 30px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    border: 2px solid #333;
-    opacity: 0; /* শুরুতে লুকানো */
-    transition: all 0.5s ease;
-    max-width: 90vw;
-    width: 320px;
-}
-
-#result-card.show {
-    opacity: 1; /* শেষে দেখাবে */
-}
-
-/* কার্ডের ভেতরের লেখা */
-#result-card p.title {
-    font-size: 16px;
-    color: #aaa;
-    margin-bottom: 5px;
-}
-
-#result-card p.amount {
-    font-size: 32px;
-    font-weight: bold;
-    color: #ffd700;
+  margin-top: 15px;
+  padding: 10px 25px;
+  font-size: 18px;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 10px;
 }
