@@ -1,8 +1,7 @@
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background: #1a1a2e;
-    color: #fff;
+    font-family: 'Arial', sans-serif;
+    background-color: #1a1a2e;
+    color: white;
     margin: 0;
     display: flex;
     justify-content: center;
@@ -10,31 +9,28 @@ body {
     min-height: 100vh;
 }
 
-.main-container { width: 100%; max-width: 500px; padding: 20px; }
+.container { text-align: center; width: 100%; max-width: 450px; padding: 20px; }
 
-h1 { color: #ffd700; margin-bottom: 20px; font-size: 24px; }
+h1 { color: #ffd700; font-size: 22px; margin-bottom: 30px; }
 
-.wheel-outer-ring {
-    position: relative;
-    display: inline-block;
-    padding: 10px;
-    background: #ffd700;
-    border-radius: 50%;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
-}
-
-.wheel-container {
+.wheel-box {
     position: relative;
     width: 320px;
     height: 320px;
+    margin: 0 auto;
 }
 
-#wheel { width: 100%; height: 100%; border-radius: 50%; }
+#wheelCanvas {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 5px solid #ffd700;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
 
-/* পয়েন্টার ডিজাইন */
-#pointer {
+#arrow {
     position: absolute;
-    top: -10px;
+    top: -15px;
     left: 50%;
     transform: translateX(-50%);
     font-size: 50px;
@@ -44,23 +40,24 @@ h1 { color: #ffd700; margin-bottom: 20px; font-size: 24px; }
 }
 
 button {
-    background: #e94560;
+    background: linear-gradient(45deg, #e94560, #ff4d4d);
     color: white;
-    padding: 15px 40px;
-    font-size: 20px;
-    font-weight: bold;
+    padding: 15px 50px;
+    font-size: 22px;
     border: none;
     border-radius: 50px;
     cursor: pointer;
     margin-top: 30px;
-    width: 80%;
+    font-weight: bold;
 }
 
-#result-box {
-    margin-top: 20px;
+#resultCard {
+    margin-top: 30px;
     background: #16213e;
-    padding: 15px;
-    border-radius: 10px;
+    padding: 20px;
+    border-radius: 15px;
     border: 2px solid #ffd700;
     display: none;
 }
+
+#amount { color: #ffd700; font-size: 45px; margin: 10px 0; }
