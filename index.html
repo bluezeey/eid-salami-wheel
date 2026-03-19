@@ -1,28 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
   <meta charset="UTF-8">
-  <title>Farhan Eid Salami Lucky Spin</title>
+  <title>Eid Salami Lucky Spin</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="container">
-    <h1>✨ Farhan Eid Salami Lucky Spin ✨</h1>
+<div class="container">
+  <h1>✨ Eid Salami Lucky Spin ✨</h1>
 
-    <div class="wheel-container">
-      <div class="pointer">▼</div>
-      <canvas id="wheel" width="300" height="300"></canvas>
-    </div>
-
-    <button id="spinBtn">SPIN</button>
-
-    <div id="resultCard" class="hidden">
-      <h2>🎉 Mubarak! 🎉</h2>
-      <p id="resultText"></p>
-    </div>
+  <div class="wheel-container">
+    <div class="pointer">▼</div>
+    <canvas id="wheel" width="300" height="300"></canvas>
   </div>
 
-  <script src="script.js"></script>
+  <button id="spinBtn">SPIN</button>
+
+  <div id="resultCard" class="hidden">
+    <h2>🎉 Mubarak! 🎉</h2>
+    <p id="resultText"></p>
+  </div>
+
+  <!-- Embedded tick sound (1-second short tick) -->
+  <audio id="spinSound" preload="auto" 
+         src="data:audio/mpeg;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCA..."></audio>
+
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
