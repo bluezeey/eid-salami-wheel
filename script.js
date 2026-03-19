@@ -17,57 +17,52 @@ const sectors = [
     { label: "২০০ টাকা", color: "#F1C40F" }
 ];
 
-const tot = sectors.length;
-const arc = Math.PI / (tot / 2);
-let ang = 0;
+const totalSectors = sectors.length;
+const arc = 2 * Math.PI / totalSectors;
 
-function drawSector(sector, i) {
-    const angle = i * arc;
-    ctx.save();
-    ctx.beginPath();
-    ctx.fillStyle = sector.color;
-    ctx.moveTo(250, 250);
-    ctx.arc(250, 250, 250, angle, angle + arc);
-    ctx.lineTo(250, 250);
-    ctx.fill();
-    ctx.stroke();
+function drawWheel() {
+    sectors.forEach((sector, i) => {
+        const angle = i * arc;
+        ctx.beginPath();
+        ctx.fillStyle = sector.color;
+        ctx.moveTo(250, 250);
+        ctx.arc(250, 250, 250, angle, angle + arc);
+        ctx.fill();
+        ctx.stroke();
 
-    ctx.translate(250, 250);
-    ctx.rotate(angle + arc / 2);
-    ctx.textAlign = "right";
-    ctx.fillStyle = "#fff";
-    ctx.font = "bold 22px Arial";
-    ctx.fillText(sector.label, 230, 10);
-    ctx.restore();
+        ctx.save();
+        ctx.translate(250, 250);
+        ctx.rotate(angle + arc / 2);
+        ctx.textAlign = "right";
+        ctx.fillStyle = "#fff";
+        ctx.font = "bold 22px Arial";
+        ctx.fillText(sector.label, 230, 10);
+        ctx.restore();
+    });
 }
 
-sectors.forEach(drawSector);
+drawWheel();
 
-let isSpinning = false;
+let currentRotation = 0;
 
 spinBtn.onclick = () => {
-    if (isSpinning) return;
-    isSpinning = true;
+    spinBtn.disabled = true;
     resultCard.style.display = 'none';
 
-    // ম্যাজিক: ২০ বা ৫০ টাকার ঘরগুলো (০ থেকে ৬ ইনডেক্স)
-    const riggedIndices = [0, 1, 2, 3, 4, 5, 6];
-    const winIdx = riggedIndices[Math.floor(Math.random() * riggedIndices.length)];
+    // ম্যাজিক: ০ থেকে ৬ ইনডেক্স মানে ২০ বা ৫০ টাকা
+    const winIdx = Math.floor(Math.random() * 7);
+    const sectorAngle = 360 / totalSectors;
     
-    // পয়েন্টার (উপরের দিকে -90 ডিগ্রি) অনুযায়ী ঘোরার সঠিক হিসাব
-    const stopAngle = (winIdx * (360 / tot)) + (180 / tot);
-    const totalRotation = (5 * 360) + (360 - stopAngle + 270);
-    
+    // পয়েন্টার ঠিক উপরে থাকায় রেজাল্ট মিলানোর হিসাব
+    const stopAt = 360 - (winIdx * sectorAngle) - (sectorAngle / 2);
+    currentRotation += (360 * 5) + stopAt;
+
     canvas.style.transition = "transform 4s cubic-bezier(0.1, 0, 0.2, 1)";
-    canvas.style.transform = `rotate(${totalRotation}deg)`;
+    canvas.style.transform = `rotate(${currentRotation}deg)`;
 
     setTimeout(() => {
         amountDisplay.innerText = sectors[winIdx].label;
         resultCard.style.display = 'block';
-        isSpinning = false;
-        // রোটেশন রিসেট যেন পরেরবার ঠিক থাকে
-        const finalDeg = totalRotation % 360;
-        canvas.style.transition = "none";
-        canvas.style.transform = `rotate(${finalDeg}deg)`;
+        spinBtn.disabled = false;
     }, 4000);
 };
