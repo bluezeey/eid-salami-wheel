@@ -5,24 +5,25 @@ const resultCard = document.getElementById("resultCard");
 const resultText = document.getElementById("resultText");
 const spinSound = document.getElementById("spinSound");
 
-// Wheel segments (big numbers + ২০ টাকা multiple)
+// Wheel segments (big numbers + multiple ২০ টাকা)
 const segments = [
-  "1000 টাকা","500 টাকা","২০০০ টাকা","2500 টাকা",
-  "1200 টাকা","২০ টাকা","3000 টাকা","৮০০ টাকা",
-  "২০ টাকা","1800 টাকা"
+  "২০ টাকা","1000 টাকা","500 টাকা","২০০০ টাকা",
+  "২৫০০ টাকা","২০ টাকা","1200 টাকা","3000 টাকা",
+  "২০ টাকা","৮০০ টাকা"
 ];
 
+// Colors for segments
 const colors = [
   "#ff4d4d","#ff9933","#ffcc00","#33cc33",
-  "#3399ff","#9933ff","#ff66cc",
-  "#00cccc","#ff6600","#cc0000"
+  "#3399ff","#9933ff","#ff66cc","#00cccc",
+  "#ff6600","#cc0000"
 ];
 
 const totalSegments = segments.length;
 const anglePerSegment = 360 / totalSegments;
 let currentRotation = 0;
 
-// Draw Wheel
+// Draw the wheel
 function drawWheel() {
   for (let i = 0; i < totalSegments; i++) {
     const startAngle = i * anglePerSegment * Math.PI/180;
@@ -47,7 +48,7 @@ function drawWheel() {
 
 drawWheel();
 
-// Spin
+// Spin logic
 spinBtn.addEventListener("click", ()=>{
   spinBtn.disabled = true;
   resultCard.classList.add("hidden");
@@ -58,7 +59,7 @@ spinBtn.addEventListener("click", ()=>{
   const selectedIndex = twentyIndexes[Math.floor(Math.random()*twentyIndexes.length)];
 
   const segmentCenter = selectedIndex*anglePerSegment + anglePerSegment/2;
-  const targetAngle = 360 - segmentCenter + 90; // pointer fix
+  const targetAngle = 360 - segmentCenter + 90;
 
   // Extra spins 4–5 times
   const extraSpins = 360*(4 + Math.floor(Math.random()*2));
@@ -73,7 +74,6 @@ spinBtn.addEventListener("click", ()=>{
   currentRotation = finalRotation % 360;
 
   canvas.addEventListener("transitionend", function handler(){
-    // Always show ২০ টাকা
     resultText.innerText = `আপনি পেয়েছেন: ২০ টাকা`;
     resultCard.classList.remove("hidden");
     spinBtn.disabled = false;
