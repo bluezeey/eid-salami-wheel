@@ -20,7 +20,6 @@ const colors = [
 
 const totalSegments = segments.length;
 const anglePerSegment = 360 / totalSegments;
-
 let currentRotation = 0;
 
 // Draw Wheel
@@ -37,7 +36,7 @@ function drawWheel() {
 
     ctx.save();
     ctx.translate(150, 150);
-    ctx.rotate(startAngle + (endAngle - startAngle) / 2);
+    ctx.rotate(startAngle + (endAngle - startAngle)/2);
     ctx.textAlign = "right";
     ctx.fillStyle = "#fff";
     ctx.font = "14px sans-serif";
@@ -48,39 +47,38 @@ function drawWheel() {
 
 drawWheel();
 
-// Probability (80%)
+// Probability 80% for ২০ & ৫০
 function getWeightedIndex() {
   let rand = Math.random();
-  if (rand < 0.8) {
-    return Math.floor(Math.random() * 7); // ২০ & ৫০
+  if(rand < 0.8){
+    return Math.floor(Math.random()*7); // 0-6
   } else {
-    return 7 + Math.floor(Math.random() * 3); // ১০০ & ২০০
+    return 7 + Math.floor(Math.random()*3); // 7-9
   }
 }
 
 // Spin
-spinBtn.addEventListener("click", () => {
+spinBtn.addEventListener("click", ()=>{
   spinBtn.disabled = true;
   resultCard.classList.add("hidden");
 
   const selectedIndex = getWeightedIndex();
+  const segmentCenter = selectedIndex * anglePerSegment + anglePerSegment/2;
+  const targetAngle = 360 - segmentCenter + 90;
 
-  const segmentCenter = selectedIndex * anglePerSegment + anglePerSegment / 2;
-  const targetAngle = 360 - segmentCenter + 90; // pointer fix
-
-  const extraSpins = 360 * 6;
+  const extraSpins = 360*6;
   const finalRotation = currentRotation + extraSpins + targetAngle;
 
-  canvas.style.transition = "transform 4s cubic-bezier(0.33, 1, 0.68, 1)";
+  canvas.style.transition = "transform 4s cubic-bezier(0.33,1,0.68,1)";
   canvas.style.transform = `rotate(${finalRotation}deg)`;
 
-  // Play embedded sound
+  // Play sound
   spinSound.currentTime = 0;
   spinSound.play();
 
   currentRotation = finalRotation % 360;
 
-  canvas.addEventListener("transitionend", function handler() {
+  canvas.addEventListener("transitionend", function handler(){
     resultText.innerText = `আপনি পেয়েছেন: ${segments[selectedIndex]}`;
     resultCard.classList.remove("hidden");
     spinBtn.disabled = false;
