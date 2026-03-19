@@ -1,68 +1,58 @@
-const canvas = document.getElementById('wheelCanvas');
-const ctx = canvas.getContext('2d');
-const spinBtn = document.getElementById('spinBtn');
-const amountDisplay = document.getElementById('amount');
-const resultCard = document.getElementById('resultCard');
-
-const sectors = [
-    { label: "২০ টাকা", color: "#FF5733" },
-    { label: "২০ টাকা", color: "#C70039" },
-    { label: "২০ টাকা", color: "#900C3F" },
-    { label: "২০ টাকা", color: "#581845" },
-    { label: "৫০ টাকা", color: "#2ECC71" },
-    { label: "৫০ টাকা", color: "#27AE60" },
-    { label: "৫০ টাকা", color: "#229954" },
-    { label: "১০০ টাকা", color: "#3498DB" },
-    { label: "১০০ টাকা", color: "#2980B9" },
-    { label: "২০০ টাকা", color: "#F1C40F" }
-];
-
-const totalSectors = sectors.length;
-const arc = 2 * Math.PI / totalSectors;
-
-function drawWheel() {
-    sectors.forEach((sector, i) => {
-        const angle = i * arc;
-        ctx.beginPath();
-        ctx.fillStyle = sector.color;
-        ctx.moveTo(250, 250);
-        ctx.arc(250, 250, 250, angle, angle + arc);
-        ctx.fill();
-        ctx.stroke();
-
-        ctx.save();
-        ctx.translate(250, 250);
-        ctx.rotate(angle + arc / 2);
-        ctx.textAlign = "right";
-        ctx.fillStyle = "#fff";
-        ctx.font = "bold 22px Arial";
-        ctx.fillText(sector.label, 230, 10);
-        ctx.restore();
-    });
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #1a1a2e;
+    color: white;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
-drawWheel();
+.container { text-align: center; width: 100%; max-width: 450px; padding: 20px; }
 
-let currentRotation = 0;
+h1 { color: #ffd700; font-size: 22px; margin-bottom: 30px; }
 
-spinBtn.onclick = () => {
-    spinBtn.disabled = true;
-    resultCard.style.display = 'none';
+.wheel-box {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    margin: 0 auto;
+}
 
-    // ম্যাজিক: ০ থেকে ৬ ইনডেক্স মানে ২০ বা ৫০ টাকা
-    const winIdx = Math.floor(Math.random() * 7);
-    const sectorAngle = 360 / totalSectors;
-    
-    // পয়েন্টার ঠিক উপরে থাকায় রেজাল্ট মিলানোর হিসাব
-    const stopAt = 360 - (winIdx * sectorAngle) - (sectorAngle / 2);
-    currentRotation += (360 * 5) + stopAt;
+#wheelCanvas {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 5px solid #ffd700;
+}
 
-    canvas.style.transition = "transform 4s cubic-bezier(0.1, 0, 0.2, 1)";
-    canvas.style.transform = `rotate(${currentRotation}deg)`;
+#arrow {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 40px;
+    color: #ff4d4d;
+    z-index: 10;
+}
 
-    setTimeout(() => {
-        amountDisplay.innerText = sectors[winIdx].label;
-        resultCard.style.display = 'block';
-        spinBtn.disabled = false;
-    }, 4000);
-};
+button {
+    background: #e94560;
+    color: white;
+    padding: 15px 50px;
+    font-size: 22px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: 30px;
+    font-weight: bold;
+}
+
+#resultCard {
+    margin-top: 20px;
+    background: #16213e;
+    padding: 20px;
+    border-radius: 15px;
+    display: none;
+}
