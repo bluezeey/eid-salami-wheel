@@ -1,8 +1,10 @@
 const wheel = document.getElementById('wheel');
 const ctx = wheel.getContext('2d');
 const spinButton = document.getElementById('spin');
+const resultCard = document.getElementById('result-card');
 const resultAmount = document.getElementById('result-amount');
 
+// আপনার রিকোয়েস্ট অনুযায়ী সেগমেন্টগুলো
 const segments = ["২০ টাকা", "২০ টাকা", "২০ টাকা", "২০ টাকা", "৫০ টাকা", "৫০ টাকা", "৫০ টাকা", "১০০ টাকা", "১০০ টাকা", "২০০ টাকা"];
 const colors = ["#FF5733", "#C70039", "#900C3F", "#581845", "#2ECC71", "#27AE60", "#229954", "#3498DB", "#2980B9", "#F1C40F"];
 const numSegments = segments.length;
@@ -38,7 +40,7 @@ let currentRotation = 0;
 spinButton.addEventListener('click', () => {
     if(spinning) return;
     spinning = true;
-    resultAmount.innerText = "...";
+    resultCard.classList.remove('show');
 
     // ম্যাজিক ট্রিক: ০ থেকে ৬ ইনডেক্সের মধ্যে (২০ ও ৫০ টাকা) থামবে
     const riggedIndexes = [0, 1, 2, 3, 4, 5, 6];
@@ -54,6 +56,7 @@ spinButton.addEventListener('click', () => {
 
     setTimeout(() => {
         resultAmount.innerText = segments[winningIndex];
+        resultCard.classList.add('show');
         spinning = false;
     }, 4000);
 });
