@@ -2,25 +2,27 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ঈদ সালামি হুইল 🎉</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="wrapper">
-        <h1>ফারহান রাব্বির পক্ষ থেকে<br>আপনার ঈদ সালামি 🎉</h1>
+    <div class="main-container">
+        <h1>ফারহান রাব্বির পক্ষ থেকে ঈদ সালামি 🎉</h1>
         
-        <div class="wheel-outer">
-            <div id="pointer">▼</div>
-            <canvas id="wheel" width="500" height="500"></canvas>
+        <div class="wheel-outer-ring">
+            <div class="wheel-container">
+                <canvas id="wheel" width="500" height="500"></canvas>
+                <div id="pointer">
+                    <img src="https://img.icons8.com/flat-round/64/000000/arrow-down.png" alt="Pointer">
+                </div>
+            </div>
         </div>
 
-        <button id="spin">সালামি নিন!</button>
-
-        <div id="result-card">
-            <p>🎉 অভিনন্দন!</p>
-            <h2>আপনি পেয়েছেন:</h2>
-            <div id="result-amount">...</div>
+        <button id="spin">ঘোরাও!</button>
+        <div id="result-box">
+            <h2 id="result-text">সালামি নিন...</h2>
+            <h1 id="result-amount"></h1>
         </div>
     </div>
 
