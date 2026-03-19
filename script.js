@@ -5,10 +5,10 @@ const resultCard = document.getElementById("resultCard");
 const resultText = document.getElementById("resultText");
 const spinSound = document.getElementById("spinSound");
 
-// Wheel segments
+// Wheel segments (big numbers + multiple ২০ টাকা)
 const segments = [
   "২০ টাকা","1000 টাকা","500 টাকা","২০০ টাকা","2500 টাকা",
-  "1200 টাকা","3000 টাকা","800 টাকা","1800 টাকা","2200 টাকা"
+  "1200 টাকা","3000 টাকা","৮০০ টাকা","২০ টাকা","1800 টাকা"
 ];
 
 const colors = [
