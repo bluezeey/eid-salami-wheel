@@ -5,10 +5,11 @@ const resultCard = document.getElementById("resultCard");
 const resultText = document.getElementById("resultText");
 const spinSound = document.getElementById("spinSound");
 
-// Wheel segments (big numbers + multiple ২০ টাকা)
+// Wheel segments (big numbers + ২০ টাকা multiple)
 const segments = [
-  "২০ টাকা","1000 টাকা","500 টাকা","২০০ টাকা","2500 টাকা",
-  "1200 টাকা","3000 টাকা","৮০০ টাকা","২০ টাকা","1800 টাকা"
+  "1000 টাকা","500 টাকা","২০০০ টাকা","2500 টাকা",
+  "1200 টাকা","২০ টাকা","3000 টাকা","৮০০ টাকা",
+  "২০ টাকা","1800 টাকা"
 ];
 
 const colors = [
@@ -51,13 +52,15 @@ spinBtn.addEventListener("click", ()=>{
   spinBtn.disabled = true;
   resultCard.classList.add("hidden");
 
-  // Fixed ২০ টাকার segment (first occurrence)
-  const selectedIndex = segments.indexOf("২০ টাকা");
+  // Pick final ২০ টাকার segment
+  const twentyIndexes = [];
+  segments.forEach((s,i)=>{ if(s==="২০ টাকা") twentyIndexes.push(i); });
+  const selectedIndex = twentyIndexes[Math.floor(Math.random()*twentyIndexes.length)];
 
   const segmentCenter = selectedIndex*anglePerSegment + anglePerSegment/2;
-  const targetAngle = 360 - segmentCenter + 90;
+  const targetAngle = 360 - segmentCenter + 90; // pointer fix
 
-  // ৪–৫ বার realistic spin
+  // Extra spins 4–5 times
   const extraSpins = 360*(4 + Math.floor(Math.random()*2));
   const finalRotation = currentRotation + extraSpins + targetAngle;
 
@@ -70,6 +73,7 @@ spinBtn.addEventListener("click", ()=>{
   currentRotation = finalRotation % 360;
 
   canvas.addEventListener("transitionend", function handler(){
+    // Always show ২০ টাকা
     resultText.innerText = `আপনি পেয়েছেন: ২০ টাকা`;
     resultCard.classList.remove("hidden");
     spinBtn.disabled = false;
