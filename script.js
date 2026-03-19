@@ -18,15 +18,15 @@ const colors = [
 ];
 
 const totalSegments = segments.length;
-const anglePerSegment = (2 * Math.PI) / totalSegments;
+const anglePerSegment = 360 / totalSegments;
 
 let currentRotation = 0;
 
-// Draw Wheel
+// 🎡 Draw Wheel
 function drawWheel() {
   for (let i = 0; i < totalSegments; i++) {
-    const startAngle = i * anglePerSegment;
-    const endAngle = startAngle + anglePerSegment;
+    const startAngle = (i * anglePerSegment) * Math.PI / 180;
+    const endAngle = ((i + 1) * anglePerSegment) * Math.PI / 180;
 
     ctx.beginPath();
     ctx.moveTo(150, 150);
@@ -36,60 +36,46 @@ function drawWheel() {
 
     ctx.save();
     ctx.translate(150, 150);
-    ctx.rotate(startAngle + anglePerSegment / 2);
+    ctx.rotate(startAngle + (endAngle - startAngle) / 2);
     ctx.textAlign = "right";
     ctx.fillStyle = "#fff";
-    ctx.font = "16px sans-serif";
-    ctx.fillText(segments[i], 140, 5);
+    ctx.font = "14px sans-serif";
+    ctx.fillText(segments[i], 130, 5);
     ctx.restore();
   }
 }
 
 drawWheel();
 
-// Probability Logic (80% → 20 & 50)
+// 🎯 Probability (80%)
 function getWeightedIndex() {
   let rand = Math.random();
 
   if (rand < 0.8) {
-    // choose from 20 & 50
-    const pool = [];
-    segments.forEach((val, i) => {
-      if (val === "২০ টাকা" || val === "৫০ টাকা") {
-        pool.push(i);
-      }
-    });
-    return pool[Math.floor(Math.random() * pool.length)];
+    return Math.floor(Math.random() * 7); // 0–6 → 20 & 50
   } else {
-    // choose from 100 & 200
-    const pool = [];
-    segments.forEach((val, i) => {
-      if (val === "১০০ টাকা" || val === "২০০ টাকা") {
-        pool.push(i);
-      }
-    });
-    return pool[Math.floor(Math.random() * pool.length)];
+    return 7 + Math.floor(Math.random() * 3); // 7–9 → 100 & 200
   }
 }
 
-// Spin Logic
+// 🎡 Spin
 spinBtn.addEventListener("click", () => {
   spinBtn.disabled = true;
   resultCard.classList.add("hidden");
 
   const selectedIndex = getWeightedIndex();
 
-  // calculate exact stopping angle
-  const stopAngle =
-    (3 * Math.PI / 2) - (selectedIndex * anglePerSegment) - (anglePerSegment / 2);
+  // 🎯 EXACT ANGLE FIX
+  const segmentCenter = selectedIndex * anglePerSegment + anglePerSegment / 2;
+  const targetAngle = 360 - segmentCenter + 90; // pointer top fix
 
-  const extraSpins = 6 * 2 * Math.PI; // 6 full spins
-  const finalRotation = currentRotation + extraSpins + stopAngle;
+  const extraSpins = 360 * 6; // 6 spins
+  const finalRotation = currentRotation + extraSpins + targetAngle;
 
   canvas.style.transition = "transform 4s cubic-bezier(0.33, 1, 0.68, 1)";
-  canvas.style.transform = `rotate(${finalRotation}rad)`;
+  canvas.style.transform = `rotate(${finalRotation}deg)`;
 
-  currentRotation = finalRotation % (2 * Math.PI);
+  currentRotation = finalRotation % 360;
 
   setTimeout(() => {
     resultText.innerText = `আপনি পেয়েছেন: ${segments[selectedIndex]}`;
