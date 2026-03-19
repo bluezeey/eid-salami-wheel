@@ -7,21 +7,19 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="main-container">
+    <div class="container">
         <h1>ফারহান রাব্বির পক্ষ থেকে ঈদ সালামি 🎉</h1>
         
-        <div class="wheel-outer-ring">
-            <div class="wheel-container">
-                <div id="pointer">▼</div> 
-                <canvas id="wheel" width="500" height="500"></canvas>
-            </div>
+        <div class="wheel-box">
+            <div id="arrow">▼</div>
+            <canvas id="wheelCanvas" width="500" height="500"></canvas>
         </div>
 
-        <button id="spin">ঘোরাও!</button>
+        <button id="spinBtn">ঘোরাও!</button>
 
-        <div id="result-box">
-            <h2 id="result-text">অভিনন্দন! আপনি পেয়েছেন:</h2>
-            <h1 id="result-amount"></h1>
+        <div id="resultCard">
+            <p>অভিনন্দন! আপনি পেয়েছেন:</p>
+            <h1 id="amount">...</h1>
         </div>
     </div>
     <script src="script.js"></script>
